@@ -1,0 +1,6 @@
+name: LandlordMap-Dynmap
+version: ${version}
+main: biz.princeps.landlordmap.dynmap.LLDynmap
+authors: [ SpatiumPrinceps, Aurelien30000, SirYwell, RainbowDashLabs ]
+depend: [ Landlord, Dynmap ]
+api-version: 1.16

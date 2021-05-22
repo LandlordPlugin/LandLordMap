@@ -1,0 +1,125 @@
+#  __        __                            _______                       __       __
+#|  \      |  \                          |       \                     |  \     /  \
+#| $$      | $$                          | $$$$$$$\ __    __  _______  | $$\   /  $$  ______    ______
+#| $$      | $$             ______       | $$  | $$|  \  |  \|       \ | $$$\ /  $$$ |      \  /      \
+#| $$      | $$            |      \      | $$  | $$| $$  | $$| $$$$$$$\| $$$$\  $$$$  \$$$$$$\|  $$$$$$\
+#| $$      | $$             \$$$$$$      | $$  | $$| $$  | $$| $$  | $$| $$\$$ $$ $$ /      $$| $$  | $$
+#| $$_____ | $$_____                     | $$__/ $$| $$__/ $$| $$  | $$| $$ \$$$| $$|  $$$$$$$| $$__/ $$
+#| $$     \| $$     \                    | $$    $$ \$$    $$| $$  | $$| $$  \$ | $$ \$$    $$| $$    $$
+# \$$$$$$$$ \$$$$$$$$                     \$$$$$$$  _\$$$$$$$ \$$   \$$ \$$      \$$  \$$$$$$$| $$$$$$$
+#                                                  |  \__| $$                                 | $$
+#                                                   \$$    $$                                 | $$
+#                                                    \$$$$$$                                   \$$
+# Hello friend!
+# Thank you for using Landlord-Dynmap. Please read this file carefully.
+#
+# markerName describes the name of the marker set, that will be toggleable in dynmap.
+# text takes HTML-formatted lines as you can see. If you are fancy, you could add links to the stat pages of the player.
+#   Any worldguard flag can be added to text as a placeholder %wgflagname%. This placeholder will be replaced with the
+#    value of the flag.
+#   Make sure to use the exact same name for the placeholder and the wg flag (case sensitive).
+#   Placeholders: %owner%, %member%, %owneruuid%, %buyableIn%, %name%, all wg flags
+#
+# worldguard: lldm is able to color world guard regions, so you don't have to install a separate plugin for that
+#
+# Coloring refers to landlord lands only. One island consists of multiple lands connected to each other.
+# Most of the options are self explanatory, but if something's unclear, feel free to contact me.
+# Coloring modes: RANDOMPERPLAYER, RANDOMPERISLAND, STATIC, RANDOMFROMSETPERPLAYER, RANDOMFROMSETPERISLAND
+LandLord:
+  markerName: 'LandLord'
+  text:
+    - '<font size="3"><b>===== %name% =====</b></font><br>'
+    - '<br>'
+    - '<i>%greeting%</i><br>'
+    - '<br>'
+    - '<b>Owner:</b> %owner%<br>'
+    - '<b>Member:</b> %member%<br>'
+    - '<br>'
+    - '<b>Buyable in:</b> %buyableIn% days<br>'
+    - '<b>Creeper-Explosions:</b> %creeper-explosion%<br>'
+    - '<b>PvP:</b> %pvp%<br>'
+    - '<b>Interaction:</b> %interact%<br>'
+    - '<b>Build:</b> %build%<br>'
+    - '<b>Chest-Access:</b> %chest-access%<br>'
+    - '<br>'
+    - '[<a href="https://minecraft-statistic.net/en/player/%owner%.html">Stats</a>] [<a href="https://lmgtfy.com/?s=d&q=%owner%">SomeStatpage</a>]'
+  flagStatus:
+    allow: '+'
+    deny: '-'
+    status: 'friends: %friends% all: %all%'
+WorldGuard:
+  color:
+    # All the lands having the lldm-color flag will get displayed on the dynmap (show_flag=true)
+    show_flag: true
+    # If the lldm_color flag is not present, the region will be hidden (default=false) by default or shown (default=true)
+    default: false
+  land: 0x81d864
+  line: 0x4daf2c
+  linethickness: 3
+  transparency: 0.6
+  markerName: 'WorldGuard'
+  text:
+    - '======== %name% ========'
+
+Coloring:
+  mode: STATIC
+  transparency: 0.6
+  static:
+    land: 0x81d864
+    line: 0x4daf2c
+    linethickness: 3
+  randomperplayer:
+    linethickness: 3
+  randomperisland:
+    linethickness: 3
+  randomfromsetperplayer:
+    linethickness: 3
+    set:
+      - 0x00ff00
+      - 0x00ffff
+      - 0x0066ff
+      - 0xcc33ff
+      - 0xffff00
+      - 0xff0000
+      - 0x0000cc
+      - 0xff6600
+  randomfromsetperisland:
+    linethickness: 3
+    set:
+      - 0x00ff00
+      - 0x00ffff
+      - 0x0066ff
+      - 0xcc33ff
+      - 0xffff00
+      - 0xff0000
+      - 0x0000cc
+      - 0xff6600
+
+CommandSettings:
+  Main:
+    name: lldm
+    description: Basic command for landlord-dynmap!
+    usage: 'Usage: /lldm'
+    permissions:
+      - landlord.dynmap.use
+    aliases:
+      - landlorddynmap
+  import:
+    name: import
+    usage: 'Imports all lands into landlord-dynmap'
+    permissions:
+      - landlord.dynmap.import
+    aliases:
+      - i
+  color:
+    name: color
+    usage: 'Colors the island you are standing on /lldm color <hex>'
+    permissions:
+      - landlord.dynmap.color
+    aliases:
+      - c
+    messages:
+      wrongformat: '&cThere was no color matching your input! Please only insert 6 letters (white ffffff)!'
+      success: '&aSuccessfully setted the color to %color%'
+      noland: '&cYou do not own the land you are standing on!'
+debugging: false
