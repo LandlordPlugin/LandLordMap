@@ -1,0 +1,32 @@
+version: 2
+
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "development"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "SirYwell"
+      - "RainbowDashLabs"
+      - "Aurelien30000"
+
+  - package-ecosystem: "gradle"
+    directory: "/LandLordMap-dynmap"
+    target-branch: "development"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "SirYwell"
+      - "RainbowDashLabs"
+      - "Aurelien30000"
+
+  - package-ecosystem: "gradle"
+    directory: "/LandLordMap-bluemap"
+    target-branch: "development"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "SirYwell"
+      - "RainbowDashLabs"
+      - "Aurelien30000"
