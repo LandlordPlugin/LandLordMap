@@ -1,6 +1,6 @@
 plugins {
     id("biz.princeps.java-conventions")
-    id("com.github.johnrengelman.shadow") version "6.0.0"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
 dependencies {
