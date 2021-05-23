@@ -1,0 +1,6 @@
+name: LandlordMap-BlueMap
+version: ${version}
+main: biz.princeps.landlordmap.bluemap.LLBlueMap
+authors: [ SpatiumPrinceps, Aurelien30000, SirYwell, RainbowDashLabs ]
+depend: [ Landlord, BlueMap ]
+api-version: 1.16

@@ -1,0 +1,83 @@
+# Hello friend!
+# Thank you for using Landlord-BlueMap. Please read this file carefully.
+
+# Frequency in ticks (1 second = 20 ticks) for the update task.
+update-task-frequency: 600
+# Max processed changes per update of the previous task.
+max-processed-per-update: 1000
+
+markerset:
+  # Name of the marker set.
+  label: "Landlord - Lands"
+  # Should the markers be always visible.
+  default-hidden: true
+  # Should users be able to show or hide the markers.
+  toggleable: true
+  # Should we keep markers only for a duration (in days) since last owner visit. This could help reducing load on BlueMap.
+  # Set -1 to disable.
+  max-lifetime: 30
+
+bluemapland:
+  # Name of the marker.
+  label: "Land - %ID%"
+
+  # Color used for markers borders (RBG).
+  line-color: "#00FF60"
+  # Width of markers borders.
+  line-width: 3
+  # Color used to fill markers (RGB).
+  fill-color: "#00FF30"
+  # Alpha of fill-color, between 0 and 1.
+  fill-alpha: 0.1
+  # Indicates if the fill-color should be automatically generared using owner.
+  owner-based: true
+
+  # Height to place marker in the world, default value (ocean height) is fine and recommanded.
+  height: 63
+  # Min visibility distance.
+  min-distance: 0
+  # Max visibility distance.
+  max-distance: 1000
+
+  # Extra info shown when a user clicks on a marker.
+  detail: |-
+    <h2 style="text-align:center;margin-block-end:0.3em">
+    %NAME%
+    </h2>
+    <div style="display:flex">
+    <div style="flex:50%;padding:10px">
+    <h3 style="margin-block-start:0.3em;margin-block-end:0.3em">
+    Owners:
+    </h3>
+    <p>
+    <span>
+    %OWNERS%
+    </span>
+    </p>
+    </div>
+    <div style="flex:50%;padding:10px">
+    <h3 style="margin-block-start:0.3em;margin-block-end:0.3em">
+    Members:
+    </h3>
+    <p>
+    <span>
+    %MEMBERS%
+    </span>
+    </p>
+    </div>
+    </p>
+
+CommandSettings:
+  Main:
+    name: llbm
+    description: Basic command for landlord-bluemap!
+    usage: 'Usage: /llbm'
+    permissions:
+      - landlord.bluemap.use
+    aliases:
+      - landlordbluemap
+  reload:
+    name: reload
+    usage: 'Usage: /llbm reload'
+    permissions:
+      - landlord.bluemap.import
