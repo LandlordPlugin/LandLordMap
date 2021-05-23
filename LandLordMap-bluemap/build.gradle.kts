@@ -7,6 +7,7 @@ dependencies {
     implementation(project(":LandLordMap-core"))
     compileOnly("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
     compileOnly("biz.princeps:landlord-core:4.350")
+    compileOnly("de.eldoria:eldo-util:1.8.4")
     compileOnly("com.github.BlueMap-Minecraft:BlueMapAPI:v1.5.0")
 }
 
