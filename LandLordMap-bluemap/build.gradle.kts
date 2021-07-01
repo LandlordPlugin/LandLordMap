@@ -13,6 +13,8 @@ dependencies {
 
 description = "LandLordMap-bluemap"
 
+val shadebade = project.group as String + ".landlord."
+
 tasks {
     processResources {
         from(sourceSets.main.get().resources.srcDirs) {
@@ -26,6 +28,8 @@ tasks {
     }
 
     shadowJar {
+        relocate("de.eldoria.eldoutilities", shadebade + "eldoutilities")
+
         archiveBaseName.set(project.name)
         destinationDirectory.set(File("../build/libs"))
     }

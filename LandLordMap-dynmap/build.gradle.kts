@@ -14,6 +14,8 @@ dependencies {
 
 description = "LandLordMap-dynmap"
 
+val shadebade = project.group as String + ".landlord."
+
 tasks {
     processResources {
         from(sourceSets.main.get().resources.srcDirs) {
@@ -31,6 +33,8 @@ tasks {
         dependencies {
             include(dependency("org.codemc.worldguardwrapper:worldguardwrapper"))
         }
+        relocate("de.eldoria.eldoutilities", shadebade + "eldoutilities")
+
         archiveBaseName.set(project.name)
         destinationDirectory.set(File("../build/libs"))
     }
