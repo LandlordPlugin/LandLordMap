@@ -22,8 +22,8 @@ import java.util.Random;
 
 public class LandHelper {
 
-    private IWorldGuardManager wg;
-    private LLDynmap pl;
+    private final IWorldGuardManager wg;
+    private final LLDynmap pl;
 
     public LandHelper(LLDynmap p, IWorldGuardManager wg) {
         this.wg = wg;
@@ -81,7 +81,7 @@ public class LandHelper {
         Random randy = new Random();
         int i = randy.nextInt(stringList.size());
 
-        return Long.valueOf(stringList.get(i));
+        return Long.parseLong(stringList.get(i));
     }
 
     /**
@@ -184,11 +184,10 @@ public class LandHelper {
             int xMax = maximumPoint.getBlockX(), zMax = maximumPoint.getBlockZ();
             int xMin = minimumPoint.getBlockX(), zMin = maximumPoint.getBlockZ();
 
-            Location p1 = maximumPoint, p2 = maximumPoint.clone(), p3 = minimumPoint, p4 = minimumPoint.clone();
+            Location p2 = maximumPoint.clone(), p4 = minimumPoint.clone();
             p2.setX(xMin);
             p4.setX(xMax);
-            points = Lists.newArrayList(p1, p2, p3, p4);
-
+            points = Lists.newArrayList(maximumPoint, p2, minimumPoint, p4);
         }
         double[] x = new double[points.size()];
         double[] z = new double[points.size()];

@@ -7,9 +7,9 @@ import java.util.*;
 
 public class GraphManager {
 
-    private Graph graph;
-    private List<IOwnedLand> vertices;
-    private LLDynmap pl;
+    private final Graph graph;
+    private final List<IOwnedLand> vertices;
+    private final LLDynmap pl;
 
     public GraphManager(LLDynmap pl, Set<IOwnedLand> lands) {
         this.vertices = new ArrayList<>(lands);
@@ -19,7 +19,7 @@ public class GraphManager {
         for (int i = 0; i < vertices.size(); i++) {
             IOwnedLand[] adjacent = pl.getWorldGuardHandler().getSurroundings(vertices.get(i));
             for (IOwnedLand pr : adjacent) {
-                if (pr != null && vertices.indexOf(pr) > -1) {
+                if (pr != null && vertices.contains(pr)) {
                     graph.addEdge(i, vertices.indexOf(pr));
                     pl.debug("Added edge " + i + "|" + vertices.indexOf(pr));
                 }

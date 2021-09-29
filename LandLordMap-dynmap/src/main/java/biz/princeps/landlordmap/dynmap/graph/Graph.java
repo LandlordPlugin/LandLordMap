@@ -1,11 +1,14 @@
 package biz.princeps.landlordmap.dynmap.graph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 class Graph {
-    private int V;
+    private final int V;
 
-    private LinkedList<Integer>[] adj;
+    private final LinkedList<Integer>[] adj;
     private int time = 0;
     private static final int NIL = -1;
     private List<Bridge> bridges;
@@ -40,9 +43,7 @@ class Graph {
         visited[u] = true;
         disc[u] = low[u] = ++time;
 
-        Iterator<Integer> i = adj[u].iterator();
-        while (i.hasNext()) {
-            int v = i.next();
+        for (int v : adj[u]) {
             if (!visited[v]) {
                 parent[v] = u;
                 bridgeUtil(v, visited, disc, low, parent);
@@ -77,7 +78,8 @@ class Graph {
     }
 
     class Bridge {
-        int one, two;
+        final int one;
+        final int two;
 
         public Bridge(int u, int v) {
             this.one = u;

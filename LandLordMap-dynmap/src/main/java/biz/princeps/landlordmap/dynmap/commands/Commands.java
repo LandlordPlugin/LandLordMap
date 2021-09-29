@@ -14,8 +14,8 @@ import java.util.List;
 
 public class Commands extends MainCommand {
 
-    private LLDynmap pl;
-    private IWorldGuardManager wgm;
+    private final LLDynmap pl;
+    private final IWorldGuardManager wgm;
 
     public Commands(LLDynmap pl) {
         super(pl.getConfig().getString("CommandSettings.Main.name"),

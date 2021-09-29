@@ -23,10 +23,11 @@ import java.util.Set;
 
 public class Import extends SubCommand {
 
-    private LLDynmap pl;
-    private IWorldGuardManager wgm;
+    private final LLDynmap pl;
+    private final IWorldGuardManager wgm;
 
-    private boolean defaultVal, showflag;
+    private final boolean defaultVal;
+    private final boolean showflag;
 
     public Import(LLDynmap pl) {
         super(pl.getConfig().getString("CommandSettings.import.name"),

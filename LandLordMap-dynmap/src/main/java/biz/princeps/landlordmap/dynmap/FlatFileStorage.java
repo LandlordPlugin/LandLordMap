@@ -17,7 +17,7 @@ import java.util.*;
 
 public class FlatFileStorage {
 
-    private LLDynmap pl;
+    private final LLDynmap pl;
 
     private File customConfigFile;
     private FileConfiguration customConfig;

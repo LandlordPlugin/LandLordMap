@@ -11,7 +11,7 @@ import org.bukkit.event.Listener;
 
 public class LandlordListener implements Listener {
 
-    private LLDynmap plugin;
+    private final LLDynmap plugin;
 
     public LandlordListener(LLDynmap plugin) {
         this.plugin = plugin;

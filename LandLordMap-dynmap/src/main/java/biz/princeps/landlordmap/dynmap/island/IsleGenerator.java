@@ -24,19 +24,19 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class IsleGenerator {
 
-    private MarkerSet am;
-    private LLDynmap pl;
-    private IWorldGuardManager wg;
+    private final MarkerSet am;
+    private final LLDynmap pl;
+    private final IWorldGuardManager wg;
 
     // The world to operate on
-    private World world;
+    private final World world;
     // maps island name to the island for nice O(1)
     private Map<String, Island> isles;
 
     // I'm taking a queue approach. Every action will be added into a queue and be polled later.
-    private Queue<Runnable> queue = new LinkedList<>();
-    private ExecutorService exec = Executors.newCachedThreadPool();
-    private Lock lock = new ReentrantLock();
+    private final Queue<Runnable> queue = new LinkedList<>();
+    private final ExecutorService exec = Executors.newCachedThreadPool();
+    private final Lock lock = new ReentrantLock();
 
     /**
      * Initialize a new Island generator for a specific world
@@ -366,9 +366,7 @@ public class IsleGenerator {
      */
     private void printIsles() {
         if (isles.size() == 0) pl.debug("EMPTY");
-        isles.forEach((a, b) -> {
-            pl.debug(a + ":\t" + b.getProtectedRegions() + "\n");
-        });
+        isles.forEach((a, b) -> pl.debug(a + ":\t" + b.getProtectedRegions() + "\n"));
     }
 
     /**

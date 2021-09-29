@@ -21,10 +21,10 @@ public class Island {
     private final MarkerSet am;
     private final UUID owner;
     private final World world;
-    private LLDynmap pl;
+    private final LLDynmap pl;
 
     private long landHex, lineHex, linethickness;
-    private double transparency;
+    private final double transparency;
 
     public Island(LLDynmap pl, World world, String name, UUID owner, Set<IOwnedLand> prs, MarkerSet am) {
         this(pl, world, name, owner, prs, new HashMap<>(), am);

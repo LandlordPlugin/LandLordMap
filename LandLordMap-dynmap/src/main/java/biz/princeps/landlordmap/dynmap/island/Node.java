@@ -3,9 +3,9 @@ package biz.princeps.landlordmap.dynmap.island;
 import java.util.Objects;
 
 class Node {
-    int x;
-    int z;
-    boolean visited;
+    final int x;
+    final int z;
+    final boolean visited;
 
     public Node(int x, int z) {
         this.x = x;

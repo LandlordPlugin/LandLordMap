@@ -12,8 +12,8 @@ import org.bukkit.entity.Player;
 
 public class Color extends SubCommand {
 
-    private LLDynmap pl;
-    private IWorldGuardManager wgm;
+    private final LLDynmap pl;
+    private final IWorldGuardManager wgm;
 
     public Color(LLDynmap pl) {
         super(pl.getConfig().getString("CommandSettings.color.name"),

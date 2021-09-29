@@ -13,15 +13,15 @@ import java.util.UUID;
  */
 public class PlayerManager {
 
-    private LLDynmap pl;
-    private FileConfiguration data;
-    private File file;
+    private final LLDynmap pl;
+    private final FileConfiguration data;
+    private final File file;
 
     /**
      * Instantiates a new playermanager. Creates data.yml if its not existing already.
      * Also loads the config file to data.
      *
-     * @param pl
+     * @param pl reference to the plugin
      */
     public PlayerManager(LLDynmap pl) {
         this.pl = pl;
