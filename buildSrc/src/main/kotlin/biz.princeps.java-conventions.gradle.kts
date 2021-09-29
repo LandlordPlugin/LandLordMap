@@ -13,7 +13,7 @@ repositories {
     // Spigot
     maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
     // EldoUtilitites & Landlord
-    maven { url = uri("https://eldonexus.de/repository/maven-releases/") }
+    maven { url = uri("https://eldonexus.de/repository/maven-public/") }
     // CodeMc-public
     maven { url = uri("https://repo.codemc.org/repository/maven-public/") }
     // Dynmap
