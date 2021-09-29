@@ -8,7 +8,6 @@ import biz.princeps.landlordmap.dynmap.island.IsleGenerator;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.dynmap.markers.AreaMarker;
 
 public class LandlordListener implements Listener {
 
@@ -48,10 +47,7 @@ public class LandlordListener implements Listener {
     public void onManage(LandManageEvent e) {
         plugin.debug("Manage Event called for " + e.getLand());
 
-        AreaMarker areaMarker = plugin.getLLMarkers().findAreaMarker(e.getLand().getName());
-        if (areaMarker != null) {
-            String text = plugin.getLandHelper().getDescription(e.getLand());
-            areaMarker.setDescription(text);
-        }
+        plugin.getLandHelper().updateLand(e.getLand());
     }
+
 }

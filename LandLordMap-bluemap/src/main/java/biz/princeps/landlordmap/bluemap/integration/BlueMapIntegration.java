@@ -122,7 +122,8 @@ public class BlueMapIntegration {
     }
 
     public void enqueueLand(IOwnedLand ownedLand, UpdateReason updateReason) {
-        if (ownedLand == null || ownedLand.getOwner() == null) return;
+        if (ownedLand == null || ownedLand.getOwner() == null)
+            return;
 
         queue.compute(ownedLand, (queuedOwnedLand, queuedUpdateReason) -> {
             if (queuedUpdateReason == null) {
@@ -153,7 +154,8 @@ public class BlueMapIntegration {
             iterations++;
         }
 
-        if (iterations == 0) return;
+        if (iterations == 0)
+            return;
         try {
             markerAPI.save();
         } catch (IOException e) {

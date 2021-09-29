@@ -168,7 +168,8 @@ public class Island {
     public PolyLineMarker getLineBetween(Node one, Node two) {
         PolyLineMarker p1 = polyLineIds.get(one.toString() + ":" + two.toString());
         PolyLineMarker p2 = polyLineIds.get(two.toString() + ":" + one.toString());
-        if (p1 != null) return p1;
+        if (p1 != null)
+            return p1;
         return p2;
     }
 

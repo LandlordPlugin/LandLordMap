@@ -85,6 +85,19 @@ public class LandHelper {
     }
 
     /**
+     * Updates the in-live marker recalculating owner, description, flags, etc.
+     *
+     * @param pr the protected region to update
+     */
+    public void updateLand(IOwnedLand pr) {
+        AreaMarker areaMarker = pl.getLLMarkers().findAreaMarker(pr.getName());
+        if (areaMarker != null) {
+            String text = getDescription(pr);
+            areaMarker.setDescription(text);
+        }
+    }
+
+    /**
      * Returns a fully formated description String for a specific land.
      * All the wg flags and placeholders like %owner% will be replaced accordingly.
      *
@@ -228,6 +241,4 @@ public class LandHelper {
         }
     }
 
-
 }
-

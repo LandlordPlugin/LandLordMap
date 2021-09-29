@@ -117,7 +117,8 @@ public class GraphManager {
             s = queue.poll();
             protectedRegionSet.add(vertices.get(s));
             for (Integer n : graph.adj(s)) {
-                if (n == ignore) continue;
+                if (n == ignore)
+                    continue;
                 if (!visited[n]) {
                     visited[n] = true;
                     queue.add(n);

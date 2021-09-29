@@ -33,7 +33,8 @@ public class LandlordListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onAsyncPlayerPreLoginEvent(AsyncPlayerPreLoginEvent event) {
-        if (event.getLoginResult() != AsyncPlayerPreLoginEvent.Result.ALLOWED) return;
+        if (event.getLoginResult() != AsyncPlayerPreLoginEvent.Result.ALLOWED)
+            return;
         final UUID uuid = event.getUniqueId();
         final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
         final Instant lastPlayed = Instant.ofEpochMilli(offlinePlayer.getLastPlayed());
@@ -57,7 +58,8 @@ public class LandlordListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onLandManageEvent(LandManageEvent event) {
-        if (!event.getFlagChanged().equals("FRIENDS")) return;
+        if (!event.getFlagChanged().equals("FRIENDS"))
+            return;
         blueMapIntegration.enqueueLand(event.getLand(), UpdateReason.MANAGE);
     }
 

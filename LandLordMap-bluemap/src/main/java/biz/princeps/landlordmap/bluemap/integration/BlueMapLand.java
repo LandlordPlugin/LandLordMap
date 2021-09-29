@@ -84,7 +84,8 @@ public class BlueMapLand {
 
     public ObjectMarker add(BlueMapAPI blueMapAPI, MarkerSet markerSet) {
         final Optional<BlueMapMap> optionalBlueMapMap = blueMapAPI.getMap(world);
-        if (!optionalBlueMapMap.isPresent()) return null;
+        if (!optionalBlueMapMap.isPresent())
+            return null;
 
         final ShapeMarker marker = markerSet.createShapeMarker(
                 id,
@@ -119,7 +120,8 @@ public class BlueMapLand {
 
     public void update(BlueMapAPI blueMapAPI, MarkerSet markerSet) {
         final ObjectMarker marker = (ObjectMarker) markerSet.getMarker(id).orElse(add(blueMapAPI, markerSet));
-        if (marker == null) return;
+        if (marker == null)
+            return;
 
         marker.setDetail(formatDetail());
     }

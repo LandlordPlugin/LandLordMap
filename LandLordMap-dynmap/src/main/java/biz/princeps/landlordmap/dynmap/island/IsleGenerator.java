@@ -80,7 +80,10 @@ public class IsleGenerator {
             return;
         }
 
+        // Even if the land already exists, it should be updated. This case covers "advertise claim" for example,
+        // where owner is replaced.
         if (this.getIsle(ol.getName()) != null) {
+            pl.getLandHelper().updateLand(ol);
             return;
         }
 
@@ -164,7 +167,8 @@ public class IsleGenerator {
                 island.getProtectedRegions().add(pr);
 
                 for (PolyLineMarker polyLine : island.getPolyLines()) {
-                    if (polyLine == null) continue;
+                    if (polyLine == null)
+                        continue;
                     polyLine.deleteMarker();
                 }
 
