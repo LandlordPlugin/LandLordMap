@@ -109,6 +109,41 @@ public class BlueMapIntegration {
         final Set<IOwnedLand> ownedLands = plugin.getLandLordAPI().getWGManager().getRegions();
         plugin.logToConsole(Level.WARNING, "Importing " + ownedLands.size() + " lands, this could take a while...");
 
+//        final BlueMapIsland blueMapIsland = new BlueMapIsland(plugin, plugin.getLandLordAPI().getWGManager().getRegion("world_1429_-2113"));
+//
+//        final ShapeMarker marker = markerSet.createShapeMarker(
+//                "test",
+//                blueMapAPI.getMap("world").get(),
+//                new Shape(blueMapIsland.getBorderPoints()),
+//                config.getBlueMapLandHeight());
+//        marker.setLabel("test");
+//        blueMapIsland.getLands().forEach((ownedLand, directions) -> {
+//            if (!directions.isEmpty()) {
+//                final Chunk chunk = ownedLand.getChunk();
+//
+//                final ShapeMarker smarker = markerSet.createShapeMarker(
+//                ownedLand.getName(),
+//                blueMapAPI.getMap("world").get(),
+//                Shape.createRect(new Vector2d(chunk.getX() << 4, chunk.getZ() << 4), new Vector2d((chunk.getX() << 4) + 16, (chunk.getZ() << 4) + 16)),
+//                config.getBlueMapLandHeight());
+//                smarker.setLabel(ownedLand.getName());
+//                smarker.setDetail(directions.toString());
+//            }
+//        });
+//        for (Vector2d borderPoint : blueMapIsland.getBorderPoints()) {
+//            final POIMarker m = markerSet.createPOIMarker(
+//                    borderPoint.toString(),
+//                    blueMapAPI.getMap("world").get(),
+//                    borderPoint.getX(), 63, borderPoint.getY());
+//            m.setLabel(borderPoint.toString());
+//        }
+//
+//        try {
+//            markerAPI.save();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
         for (IOwnedLand ownedLand : plugin.getLandLordAPI().getWGManager().getRegions()) {
             final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(ownedLand.getOwner());
             final Instant lastPlayed = Instant.ofEpochMilli(offlinePlayer.getLastPlayed());
