@@ -27,17 +27,18 @@ public class LandlordListener implements Listener {
 
     public LandlordListener(LLBlueMap plugin, BlueMapIntegration blueMapIntegration) {
         this.plugin = plugin;
-        this.config = plugin.getConfiguration();
+        config = plugin.getConfiguration();
         this.blueMapIntegration = blueMapIntegration;
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onAsyncPlayerPreLoginEvent(AsyncPlayerPreLoginEvent event) {
-        if (event.getLoginResult() != AsyncPlayerPreLoginEvent.Result.ALLOWED)
+        if (event.getLoginResult() != AsyncPlayerPreLoginEvent.Result.ALLOWED){
             return;
-        final UUID uuid = event.getUniqueId();
-        final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
-        final Instant lastPlayed = Instant.ofEpochMilli(offlinePlayer.getLastPlayed());
+        }
+        UUID uuid = event.getUniqueId();
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+        Instant lastPlayed = Instant.ofEpochMilli(offlinePlayer.getLastPlayed());
 
         if (lastPlayed.isBefore(Instant.now().minus(config.getMarkerSetLifetime(), ChronoUnit.DAYS))) {
             for (IOwnedLand ownedLand : plugin.getLandLordAPI().getWGManager().getRegions(uuid)) {
@@ -58,7 +59,7 @@ public class LandlordListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onLandManageEvent(LandManageEvent event) {
-        if (!event.getFlagChanged().equals("FRIENDS"))
+        if (!"FRIENDS".equals(event.getFlagChanged()))
             return;
         blueMapIntegration.enqueueLand(event.getLand(), UpdateReason.MANAGE);
     }

@@ -31,19 +31,19 @@ public class BlueMapLand {
     private final String members;
 
     public BlueMapLand(LLBlueMap plugin, IOwnedLand ownedLand) {
-        this.config = plugin.getConfiguration();
+        config = plugin.getConfiguration();
 
-        this.id = ownedLand.getName();
-        this.label = config.getBlueMapLandLabel().replace("%ID%", id);
-        this.world = ownedLand.getWorld().getName();
+        id = ownedLand.getName();
+        label = config.getBlueMapLandLabel().replace("%ID%", id);
+        world = ownedLand.getWorld().getName();
 
-        final Chunk chunk = ownedLand.getChunk();
-        this.firstCorner = new Vector2d(chunk.getX() << 4, chunk.getZ() << 4);
-        this.secondCorner = new Vector2d((chunk.getX() << 4) + 16, (chunk.getZ() << 4) + 16);
+        Chunk chunk = ownedLand.getChunk();
+        firstCorner = new Vector2d(chunk.getX() << 4, chunk.getZ() << 4);
+        secondCorner = new Vector2d((chunk.getX() << 4) + 16, (chunk.getZ() << 4) + 16);
 
-        this.owner = ownedLand.getOwner();
-        this.owners = ownedLand.getOwnersString();
-        this.members = ownedLand.getMembersString();
+        owner = ownedLand.getOwner();
+        owners = ownedLand.getOwnersString();
+        members = ownedLand.getMembersString();
     }
 
     public String getId() {
@@ -83,11 +83,11 @@ public class BlueMapLand {
     }
 
     public ObjectMarker add(BlueMapAPI blueMapAPI, MarkerSet markerSet) {
-        final Optional<BlueMapMap> optionalBlueMapMap = blueMapAPI.getMap(world);
+        Optional<BlueMapMap> optionalBlueMapMap = blueMapAPI.getMap(world);
         if (!optionalBlueMapMap.isPresent())
             return null;
 
-        final ShapeMarker marker = markerSet.createShapeMarker(
+        ShapeMarker marker = markerSet.createShapeMarker(
                 id,
                 optionalBlueMapMap.get(),
                 Shape.createRect(firstCorner, secondCorner),
@@ -98,12 +98,12 @@ public class BlueMapLand {
         marker.setLineColor(config.getBlueMapLandLineColor());
         marker.setLineWidth(config.getBlueMapLandLineWidth());
 
-        final Color fillColor;
+        Color fillColor;
         if (config.isBlueMapLandOwnerBased()) {
-            final Color playerColor = new Color((int) owner.getMostSignificantBits());
+            Color playerColor = new Color((int) owner.getMostSignificantBits());
             fillColor = new Color(playerColor.getRed(), playerColor.getGreen(), playerColor.getBlue(), config.getBlueMapLandFillAlpha());
         } else {
-            final Color configColor = config.getBlueMapLandFillColor();
+            Color configColor = config.getBlueMapLandFillColor();
             fillColor = new Color(configColor.getRed(), configColor.getGreen(), configColor.getBlue(), config.getBlueMapLandFillAlpha());
         }
         marker.setFillColor(fillColor);
@@ -119,7 +119,7 @@ public class BlueMapLand {
     }
 
     public void update(BlueMapAPI blueMapAPI, MarkerSet markerSet) {
-        final ObjectMarker marker = (ObjectMarker) markerSet.getMarker(id).orElse(add(blueMapAPI, markerSet));
+        ObjectMarker marker = (ObjectMarker) markerSet.getMarker(id).orElse(add(blueMapAPI, markerSet));
         if (marker == null)
             return;
 

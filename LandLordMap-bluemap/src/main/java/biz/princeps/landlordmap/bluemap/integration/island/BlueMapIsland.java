@@ -17,8 +17,8 @@ public class BlueMapIsland {
     public BlueMapIsland(LLBlueMap plugin, IOwnedLand ownedLand) {
         this.plugin = plugin;
 
-        this.owner = ownedLand.getOwner();
-        this.lands = new HashMap<>();
+        owner = ownedLand.getOwner();
+        lands = new HashMap<>();
 
         recursiveSearch(ownedLand);
     }
@@ -35,8 +35,8 @@ public class BlueMapIsland {
         if (center == null || lands.containsKey(center))
             return;
 
-        final IOwnedLand[] adjacents = plugin.getLandLordAPI().getWGManager().getSurroundingsOwner(center, owner);
-        final Set<Direction> directions = new HashSet<>();
+        IOwnedLand[] adjacents = plugin.getLandLordAPI().getWGManager().getSurroundingsOwner(center, owner);
+        Set<Direction> directions = EnumSet.noneOf(Direction.class);
 
         for (Direction direction : Direction.values()) {
             if (adjacents[direction.getIndex()] == null) {
@@ -51,17 +51,17 @@ public class BlueMapIsland {
     }
 
     public Vector2d[] getBorderPoints() {
-        final Set<Vector2d> points = new LinkedHashSet<>();
+        Set<Vector2d> points = new LinkedHashSet<>();
 
         for (Map.Entry<IOwnedLand, Set<Direction>> entry : lands.entrySet()) {
-            final Set<Direction> directions = entry.getValue();
+            Set<Direction> directions = entry.getValue();
 
             if (directions.isEmpty())
                 continue;
-            final IOwnedLand iOwnedLand = entry.getKey();
-            final Chunk chunk = iOwnedLand.getChunk();
-            final int chunkX = chunk.getX();
-            final int chunkZ = chunk.getZ();
+            IOwnedLand iOwnedLand = entry.getKey();
+            Chunk chunk = iOwnedLand.getChunk();
+            int chunkX = chunk.getX();
+            int chunkZ = chunk.getZ();
 
             for (Direction direction : directions) {
                 points.add(direction.getFirstPoint(chunkX, chunkZ));

@@ -30,9 +30,9 @@ public class BlueMapIntegration {
 
     public BlueMapIntegration(LLBlueMap plugin) {
         this.plugin = plugin;
-        this.config = plugin.getConfiguration();
+        config = plugin.getConfiguration();
 
-        this.queue = new ConcurrentHashMap<>();
+        queue = new ConcurrentHashMap<>();
     }
 
     private MarkerSet buildMarkerSet(MarkerAPI markerAPI) {
@@ -42,28 +42,28 @@ public class BlueMapIntegration {
     public void hookBlueMap(BlueMapAPI blueMapAPI) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, bukkitTask -> {
             try {
-                final MarkerAPI markerAPI = blueMapAPI.getMarkerAPI();
-                plugin.logToConsole(Level.INFO, "Loading Landlord markers...");
+                MarkerAPI markerAPI = blueMapAPI.getMarkerAPI();
+                plugin.getLogger().info("Loading Landlord markers...");
 
-                final MarkerSet markerSet = buildMarkerSet(markerAPI);
-                final int size = markerSet.getMarkers().size();
+                MarkerSet markerSet = buildMarkerSet(markerAPI);
+                int size = markerSet.getMarkers().size();
 
-                plugin.logToConsole(Level.INFO, "Updating Landlord markers...");
+                plugin.getLogger().info("Updating Landlord markers...");
                 markerSet.setLabel(config.getMarkerSetLabel());
                 markerSet.setDefaultHidden(config.isMarkerSetDefaultHidden());
                 markerSet.setToggleable(config.isMarkerSetToggleable());
 
                 if (size == 0) {
-                    plugin.logToConsole(Level.WARNING, "Landlord markers not found!");
+                    plugin.getLogger().warning("Landlord markers not found!");
                     importLands(blueMapAPI, markerAPI, markerSet);
                 } else {
-                    plugin.logToConsole(Level.INFO, size + " Landlord markers found!");
+                    plugin.getLogger().info(size + " Landlord markers found!");
                     markerAPI.save();
                 }
-                plugin.logToConsole(Level.INFO, "Loading update task...");
+                plugin.getLogger().info("Loading update task...");
                 initUpdateTask();
             } catch (IOException e) {
-                e.printStackTrace();
+                plugin.getLogger().log(Level.SEVERE, "Could not retrieve marker api", e);
             }
         });
     }
@@ -71,14 +71,14 @@ public class BlueMapIntegration {
     public void unhookBlueMap(BlueMapAPI blueMapAPI) {
         try {
             updateTask.cancel();
-            final MarkerAPI markerAPI = blueMapAPI.getMarkerAPI();
+            MarkerAPI markerAPI = blueMapAPI.getMarkerAPI();
 
-            final Set<IOwnedLand> ownedLands = plugin.getLandLordAPI().getWGManager().getRegions();
-            plugin.logToConsole(Level.WARNING, "Checking " + ownedLands.size() + " lands and processing " + queue.size() + " remaining updates, this could take a while...");
+            Set<IOwnedLand> ownedLands = plugin.getLandLordAPI().getWGManager().getRegions();
+            plugin.getLogger().warning("Checking " + ownedLands.size() + " lands and processing " + queue.size() + " remaining updates, this could take a while...");
 
             for (IOwnedLand ownedLand : plugin.getLandLordAPI().getWGManager().getRegions()) {
-                final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(ownedLand.getOwner());
-                final Instant lastPlayed = Instant.ofEpochMilli(offlinePlayer.getLastPlayed());
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(ownedLand.getOwner());
+                Instant lastPlayed = Instant.ofEpochMilli(offlinePlayer.getLastPlayed());
 
                 if (lastPlayed.isBefore(Instant.now().minus(config.getMarkerSetLifetime(), ChronoUnit.DAYS))) {
                     enqueueLand(ownedLand, UpdateReason.UNCLAIM);
@@ -86,7 +86,7 @@ public class BlueMapIntegration {
             }
             processQueue(blueMapAPI, markerAPI, buildMarkerSet(markerAPI), Integer.MAX_VALUE);
         } catch (IOException e) {
-            e.printStackTrace();
+            plugin.getLogger().log(Level.SEVERE, "Could not retrieve marker api", e);
         }
     }
 
@@ -97,17 +97,17 @@ public class BlueMapIntegration {
         updateTask = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () ->
                 BlueMapAPI.getInstance().ifPresent(blueMapAPI -> {
                     try {
-                        final MarkerAPI markerAPI = blueMapAPI.getMarkerAPI();
+                        MarkerAPI markerAPI = blueMapAPI.getMarkerAPI();
                         processQueue(blueMapAPI, markerAPI, buildMarkerSet(markerAPI), config.getMaxProcessedPerUpdate());
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        plugin.getLogger().log(Level.SEVERE, "Could not retrieve marker api", e);
                     }
                 }), config.getUpdateTaskFrequency(), config.getUpdateTaskFrequency());
     }
 
     private void importLands(BlueMapAPI blueMapAPI, MarkerAPI markerAPI, MarkerSet markerSet) {
-        final Set<IOwnedLand> ownedLands = plugin.getLandLordAPI().getWGManager().getRegions();
-        plugin.logToConsole(Level.WARNING, "Importing " + ownedLands.size() + " lands, this could take a while...");
+        Set<IOwnedLand> ownedLands = plugin.getLandLordAPI().getWGManager().getRegions();
+        plugin.getLogger().warning("Importing " + ownedLands.size() + " lands, this could take a while...");
 
 //        final BlueMapIsland blueMapIsland = new BlueMapIsland(plugin, plugin.getLandLordAPI().getWGManager().getRegion("world_1429_-2113"));
 //
@@ -145,8 +145,8 @@ public class BlueMapIntegration {
 //        }
 
         for (IOwnedLand ownedLand : plugin.getLandLordAPI().getWGManager().getRegions()) {
-            final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(ownedLand.getOwner());
-            final Instant lastPlayed = Instant.ofEpochMilli(offlinePlayer.getLastPlayed());
+            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(ownedLand.getOwner());
+            Instant lastPlayed = Instant.ofEpochMilli(offlinePlayer.getLastPlayed());
 
             if (lastPlayed.isAfter(Instant.now().minus(config.getMarkerSetLifetime(), ChronoUnit.DAYS))) {
                 enqueueLand(ownedLand, UpdateReason.CLAIM);
@@ -157,20 +157,15 @@ public class BlueMapIntegration {
     }
 
     public void enqueueLand(IOwnedLand ownedLand, UpdateReason updateReason) {
-        if (ownedLand == null || ownedLand.getOwner() == null)
-            return;
+        if (ownedLand == null || ownedLand.getOwner() == null) return;
 
         queue.compute(ownedLand, (queuedOwnedLand, queuedUpdateReason) -> {
-            if (queuedUpdateReason == null) {
-                return updateReason;
-            }
+            if (queuedUpdateReason == null) return updateReason;
 
             switch (queuedUpdateReason) {
                 case CLAIM:
                 case UNCLAIM:
-                    if (updateReason == UpdateReason.MANAGE) {
-                        return queuedUpdateReason;
-                    }
+                    if (updateReason == UpdateReason.MANAGE) return queuedUpdateReason;
                 default:
                     return updateReason;
             }
@@ -181,7 +176,7 @@ public class BlueMapIntegration {
         int iterations = 0;
 
         for (Iterator<Map.Entry<IOwnedLand, UpdateReason>> iterator = queue.entrySet().iterator(); iterator.hasNext() && iterations < limit; ) {
-            final Map.Entry<IOwnedLand, UpdateReason> entry = iterator.next();
+            Map.Entry<IOwnedLand, UpdateReason> entry = iterator.next();
 
             new BlueMapLand(plugin, entry.getKey()).process(blueMapAPI, markerSet, entry.getValue());
 
@@ -189,12 +184,12 @@ public class BlueMapIntegration {
             iterations++;
         }
 
-        if (iterations == 0)
-            return;
+        if (iterations == 0) return;
+
         try {
             markerAPI.save();
         } catch (IOException e) {
-            e.printStackTrace();
+            plugin.getLogger().log(Level.SEVERE, "Could not save to marker api", e);
         }
     }
 

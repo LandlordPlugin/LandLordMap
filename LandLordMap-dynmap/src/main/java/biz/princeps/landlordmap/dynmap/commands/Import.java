@@ -35,7 +35,7 @@ public class Import extends SubCommand {
                 Sets.newHashSet(pl.getConfig().getStringList("CommandSettings.import.permissions")),
                 Sets.newHashSet(pl.getConfig().getStringList("CommandSettings.import.aliases")));
         this.pl = pl;
-        this.wgm = pl.getWorldGuardHandler();
+        wgm = pl.getWorldGuardHandler();
         defaultVal = pl.getConfig().getBoolean("WorldGuard.color.default");
         showflag = pl.getConfig().getBoolean("WorldGuard.color.show_flag");
 
@@ -44,7 +44,7 @@ public class Import extends SubCommand {
     @Override
     public void onCommand(Properties properties, Arguments arguments) {
         //lldm import <option>
-        if (arguments.size() == 0 || (arguments.size() == 1 && arguments.get()[0].equalsIgnoreCase("all"))) {
+        if (arguments.size() == 0 || (arguments.size() == 1 && "all".equalsIgnoreCase(arguments.get()[0]))) {
             // assume all
             properties.getCommandSender().sendMessage(ChatColor.GREEN + "Starting to import all regions into dynmap!");
             run(() -> {

@@ -13,7 +13,7 @@ class Graph {
     private static final int NIL = -1;
     private List<Bridge> bridges;
 
-    public Graph(int v) {
+    Graph(int v) {
         V = v;
         adj = new LinkedList[v];
         for (int i = 0; i < v; ++i)
@@ -77,13 +77,13 @@ class Graph {
         return bridges;
     }
 
-    class Bridge {
+    static class Bridge {
         final int one;
         final int two;
 
-        public Bridge(int u, int v) {
-            this.one = u;
-            this.two = v;
+        Bridge(int u, int v) {
+            one = u;
+            two = v;
         }
 
         @Override

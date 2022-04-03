@@ -6,7 +6,12 @@ import org.codemc.worldguardwrapper.flag.IWrappedFlag;
 
 import java.util.Optional;
 
-public class LLDM_Worldguard {
+public final class LLDM_Worldguard {
+
+    private LLDM_Worldguard() {
+        throw new UnsupportedOperationException("This is a utility class.");
+    }
+
 
     public static IWrappedFlag<Boolean> LLDM_COLOR_FLAG;
 

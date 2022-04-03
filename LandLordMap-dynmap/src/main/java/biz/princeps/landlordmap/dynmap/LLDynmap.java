@@ -37,26 +37,26 @@ public class LLDynmap extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         try {
-            this.dynMap = (DynmapAPI) getServer().getPluginManager().getPlugin("dynmap");
+            dynMap = (DynmapAPI) getServer().getPluginManager().getPlugin("dynmap");
         } catch (NoClassDefFoundError ex) {
             getLogger().warning("dynMap is missing! Couldn't start LLDM!!!");
-            this.getPluginLoader().disablePlugin(this);
+            getPluginLoader().disablePlugin(this);
             return;
         }
         try {
-            this.api = (ILandLord) getServer().getPluginManager().getPlugin("Landlord");
+            api = (ILandLord) getServer().getPluginManager().getPlugin("Landlord");
         } catch (NoClassDefFoundError ex) {
             getLogger().warning("Landlord missing! Please make sure to install the latest version of Landlord!");
-            this.getPluginLoader().disablePlugin(this);
+            getPluginLoader().disablePlugin(this);
             return;
         }
         initMarkers();
         flatFileStorage = new FlatFileStorage(this);
-        this.playerManager = new PlayerManager(this);
-        this.worldGuardHandler = api.getWGManager();
+        playerManager = new PlayerManager(this);
+        worldGuardHandler = api.getWGManager();
 
-        this.landHelper = new LandHelper(this, worldGuardHandler);
-        this.isleGenerator = flatFileStorage.getIsles();
+        landHelper = new LandHelper(this, worldGuardHandler);
+        isleGenerator = flatFileStorage.getIsles();
 
         PrincepsLib.getCommandManager().registerCommand(new Commands(this));
 
@@ -70,7 +70,7 @@ public class LLDynmap extends JavaPlugin implements Listener {
     }
 
     private void initListener() {
-        this.getServer().getPluginManager().registerEvents(new LandlordListener(this), this);
+        getServer().getPluginManager().registerEvents(new LandlordListener(this), this);
     }
 
     /**
@@ -126,7 +126,7 @@ public class LLDynmap extends JavaPlugin implements Listener {
 
     public void debug(String message) {
         if (getConfig().getBoolean("debugging", false))
-            this.getLogger().info(message);
+            getLogger().info(message);
     }
 
     public String getMessage(String path) {
