@@ -13,7 +13,16 @@ import org.dynmap.markers.GenericMarker;
 import org.dynmap.markers.MarkerSet;
 import org.dynmap.markers.PolyLineMarker;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
@@ -45,11 +54,11 @@ public class IsleGenerator {
      * @param world  the world to operate on
      */
     public IsleGenerator(LLDynmap plugin, World world) {
-        this.isles = new HashMap<>();
-        this.am = plugin.getLLMarkers();
-        this.pl = plugin;
+        isles = new HashMap<>();
+        am = plugin.getLLMarkers();
+        pl = plugin;
         this.world = world;
-        this.wg = pl.getWorldGuardHandler();
+        wg = pl.getWorldGuardHandler();
 
         // Starting the queue thread
         new BukkitRunnable() {
@@ -82,7 +91,7 @@ public class IsleGenerator {
 
         // Even if the land already exists, it should be updated. This case covers "advertise claim" for example,
         // where owner is replaced.
-        if (this.getIsle(ol.getName()) != null) {
+        if (getIsle(ol.getName()) != null) {
             pl.getLandHelper().updateLand(ol);
             return;
         }
@@ -138,11 +147,11 @@ public class IsleGenerator {
         lands.remove(null);
 
         pl.debug(pr.getName() + ": Lands: " + lands);
+        Set<IOwnedLand> landList = new HashSet<>();
         switch (lands.size()) {
             case 0:
                 // case 1
                 pl.debug("Case 1");
-                Set<IOwnedLand> landList = new HashSet<>();
                 landList.add(pr);
 
                 // Insert a new island and update the marker id
@@ -187,7 +196,6 @@ public class IsleGenerator {
                 pl.debug("Case 3");
                 // Merge all together into a new one
                 // This list will contain all the lands of the new merged huge island
-                landList = new HashSet<>();
                 landList.add(pr);
 
                 Island newIsland = new Island(pl, world, pr.getName(), pr.getOwner(), landList, am);
@@ -237,7 +245,7 @@ public class IsleGenerator {
     public void remove(IOwnedLand pr) {
         lock.lock();
         try {
-            queue.add(() -> this.removeLocal(pr));
+            queue.add(() -> removeLocal(pr));
         } finally {
             lock.unlock();
         }
@@ -269,11 +277,11 @@ public class IsleGenerator {
         pl.debug("Connected Components: " + connectedComponents);
 
         oldIsland.removeVisual();
-        this.isles.remove(oldIsland.getName());
+        isles.remove(oldIsland.getName());
 
         connectedComponents.forEach((l, set) -> {
             Island island = new Island(pl, world, l.getName(), l.getOwner(), set, am);
-            this.isles.put(island.getName(), island);
+            isles.put(island.getName(), island);
             for (IOwnedLand p : set) {
                 island.markLand(p);
                 island.outline(p, pr);
@@ -365,7 +373,7 @@ public class IsleGenerator {
      * Prints all islands.
      */
     private void printIsles() {
-        if (isles.size() == 0) pl.debug("EMPTY");
+        if (isles.isEmpty()) pl.debug("EMPTY");
         isles.forEach((a, b) -> pl.debug(a + ":\t" + b.getProtectedRegions() + "\n"));
     }
 

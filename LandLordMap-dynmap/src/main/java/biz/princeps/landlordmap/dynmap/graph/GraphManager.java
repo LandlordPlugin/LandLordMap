@@ -12,9 +12,9 @@ public class GraphManager {
     private final LLDynmap pl;
 
     public GraphManager(LLDynmap pl, Set<IOwnedLand> lands) {
-        this.vertices = new ArrayList<>(lands);
+        vertices = new ArrayList<>(lands);
         this.pl = pl;
-        this.graph = new Graph(vertices.size());
+        graph = new Graph(vertices.size());
 
         for (int i = 0; i < vertices.size(); i++) {
             IOwnedLand[] adjacent = pl.getWorldGuardHandler().getSurroundings(vertices.get(i));
@@ -45,7 +45,7 @@ public class GraphManager {
         // first step, get neighbors of pr
         IOwnedLand[] adjacentOfOwner = pl.getWorldGuardHandler().getSurroundingsOwner(pr, pr.getOwner());
         for (IOwnedLand protectedRegion : adjacentOfOwner) {
-            if (protectedRegion != null && this.vertices.contains(protectedRegion)) {
+            if (protectedRegion != null && vertices.contains(protectedRegion)) {
                 queue.add(protectedRegion);
             }
         }
@@ -53,7 +53,7 @@ public class GraphManager {
         while (!queue.isEmpty()) {
             IOwnedLand pop = queue.pop();
 
-            Set<IOwnedLand> protectedRegionSet = this.breadthFirstSearch(pr, pop);
+            Set<IOwnedLand> protectedRegionSet = breadthFirstSearch(pr, pop);
             sections.put(pop, protectedRegionSet);
 
             queue.removeAll(protectedRegionSet);
@@ -113,7 +113,7 @@ public class GraphManager {
         visited[s] = true;
         queue.add(s);
 
-        while (queue.size() != 0) {
+        while (!queue.isEmpty()) {
             s = queue.poll();
             protectedRegionSet.add(vertices.get(s));
             for (Integer n : graph.adj(s)) {
@@ -129,4 +129,3 @@ public class GraphManager {
     }
 
 }
-
