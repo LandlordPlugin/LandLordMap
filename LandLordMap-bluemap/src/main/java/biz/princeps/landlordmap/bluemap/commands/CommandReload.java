@@ -26,7 +26,7 @@ public class CommandReload extends SubCommand {
         plugin.reloadConfig();
         plugin.getConfiguration().load();
 
-        final Optional<BlueMapAPI> optionalBlueMapAPI = BlueMapAPI.getInstance();
+        Optional<BlueMapAPI> optionalBlueMapAPI = BlueMapAPI.getInstance();
         if (optionalBlueMapAPI.isPresent()) {
             plugin.getBlueMapIntegration().hookBlueMap(optionalBlueMapAPI.get());
             properties.sendMessage("§aConfig successfully reloaded!");

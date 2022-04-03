@@ -43,19 +43,19 @@ public class Island {
     public Island(LLDynmap pl, World world, String name, UUID owner, Set<IOwnedLand> prs, Map<String, PolyLineMarker> polys, MarkerSet am) {
         this.name = name;
         this.pl = pl;
-        this.protectedRegions = prs;
-        this.polyLineIds = polys;
+        protectedRegions = prs;
+        polyLineIds = polys;
         this.am = am;
         this.world = world;
         this.owner = owner;
-        this.transparency = pl.getConfig().getDouble("Coloring.transparency", 0.6);
+        transparency = pl.getConfig().getDouble("Coloring.transparency", 0.6);
 
         // Calculates the color depending on config options.
         switch (pl.getConfig().getString("Coloring.mode").toUpperCase()) {
             case "STATIC":
-                this.landHex = pl.getConfig().getLong("Coloring.static.land");
-                this.lineHex = pl.getConfig().getLong("Coloring.static.line");
-                this.linethickness = pl.getConfig().getLong("Coloring.static.linethickness");
+                landHex = pl.getConfig().getLong("Coloring.static.land");
+                lineHex = pl.getConfig().getLong("Coloring.static.line");
+                linethickness = pl.getConfig().getLong("Coloring.static.linethickness");
                 break;
 
             case "RANDOMPERPLAYER":
@@ -63,15 +63,15 @@ public class Island {
                     long fill = pl.getLandHelper().randomColor();
                     pl.getPlayerManager().add(owner, fill, fill);
                 }
-                this.landHex = pl.getPlayerManager().getLandColor(owner);
-                this.lineHex = pl.getPlayerManager().getLineColor(owner);
-                this.linethickness = pl.getConfig().getLong("Coloring.randomperplayer.linethickness");
+                landHex = pl.getPlayerManager().getLandColor(owner);
+                lineHex = pl.getPlayerManager().getLineColor(owner);
+                linethickness = pl.getConfig().getLong("Coloring.randomperplayer.linethickness");
                 break;
 
             case "RANDOMPERISLAND":
-                this.landHex = pl.getLandHelper().randomColor();
-                this.lineHex = landHex;
-                this.linethickness = pl.getConfig().getLong("Coloring.randomperisland.linethickness");
+                landHex = pl.getLandHelper().randomColor();
+                lineHex = landHex;
+                linethickness = pl.getConfig().getLong("Coloring.randomperisland.linethickness");
                 break;
 
             case "RANDOMFROMSETPERPLAYER":
@@ -82,16 +82,16 @@ public class Island {
                     pl.getPlayerManager().add(owner, fill, fill);
                 }
 
-                this.landHex = pl.getPlayerManager().getLandColor(owner);
-                this.lineHex = pl.getPlayerManager().getLineColor(owner);
-                this.linethickness = pl.getConfig().getLong("Coloring.randomfromsetperplayer.linethickness");
+                landHex = pl.getPlayerManager().getLandColor(owner);
+                lineHex = pl.getPlayerManager().getLineColor(owner);
+                linethickness = pl.getConfig().getLong("Coloring.randomfromsetperplayer.linethickness");
                 break;
 
             case "RANDOMFROMSETPERISLAND":
-                this.landHex = pl.getLandHelper().randomColorFromSet(pl.getConfig().getString("Coloring.mode")
+                landHex = pl.getLandHelper().randomColorFromSet(pl.getConfig().getString("Coloring.mode")
                         .toLowerCase());
-                this.lineHex = landHex;
-                this.linethickness = pl.getConfig().getLong("Coloring.randomperisland.linethickness");
+                lineHex = landHex;
+                linethickness = pl.getConfig().getLong("Coloring.randomperisland.linethickness");
                 break;
         }
     }
@@ -117,7 +117,7 @@ public class Island {
      */
     public void addPolyLine(PolyLineMarker pl) {
         if (pl != null) {
-            this.polyLineIds.put(pl.getMarkerID(), pl);
+            polyLineIds.put(pl.getMarkerID(), pl);
         }
     }
 
@@ -154,7 +154,7 @@ public class Island {
      * @param polyLineMarker polyline that should be removed
      */
     public void removePolyLine(PolyLineMarker polyLineMarker) {
-        this.polyLineIds.remove(polyLineMarker.getMarkerID());
+        polyLineIds.remove(polyLineMarker.getMarkerID());
         polyLineMarker.deleteMarker();
     }
 
@@ -181,7 +181,7 @@ public class Island {
     public void markLand(IOwnedLand pr) {
         String landname = pr.getName();
 
-        if (this.am.findAreaMarker(landname) != null) {
+        if (am.findAreaMarker(landname) != null) {
             return;
         }
 
@@ -212,7 +212,7 @@ public class Island {
      */
     public void markLine(String id, double[] x, double[] z) {
 
-        if (this.am.findPolyLineMarker(id) != null) {
+        if (am.findPolyLineMarker(id) != null) {
             return;
         }
 
@@ -233,10 +233,10 @@ public class Island {
     }
 
     public void setColor(long hex) {
-        this.landHex = hex;
-        this.lineHex = hex;
+        landHex = hex;
+        lineHex = hex;
         for (IOwnedLand land : protectedRegions) {
-            AreaMarker areaMarker = this.am.findAreaMarker(land.getName());
+            AreaMarker areaMarker = am.findAreaMarker(land.getName());
             if (areaMarker != null) {
                 areaMarker.setFillStyle(transparency, (int) landHex);
                 areaMarker.setLineStyle(1, 0, (int) landHex);
@@ -253,7 +253,7 @@ public class Island {
     @Override
     public String toString() {
         ArrayList<String> isles = new ArrayList<>();
-        for (IOwnedLand protectedRegion : this.protectedRegions) {
+        for (IOwnedLand protectedRegion : protectedRegions) {
             isles.add(protectedRegion.getName());
         }
         return "{ ISLAND name=" + name + ", isles=" + isles + "}";
@@ -280,7 +280,7 @@ public class Island {
      */
     private boolean isWithinIsland(int x, int z) {
         boolean hasXUp = false, hasXDown = false, hasZUp = false, hasZDown = false;
-        for (IOwnedLand inner : this.getProtectedRegions()) {
+        for (IOwnedLand inner : getProtectedRegions()) {
             int xinner = pl.getWorldGuardHandler().getX(inner.getName());
             int zinner = pl.getWorldGuardHandler().getZ(inner.getName());
             if (x >= xinner && zinner == z) {
@@ -335,10 +335,10 @@ public class Island {
                 n2 = node;
             }
         }
-        pl.debug("x+1 z: " + n1.toString() + ":" + n2.toString());
+        pl.debug("x+1 z: " + n1 + ":" + n2);
         if (adjacentOfOwner[1] == null) {
             pl.debug("\tinserting");
-            markLine(n1.toString() + ":" + n2.toString(), new double[]{n1.x, n2.x}, new double[]{n1.z, n2.z});
+            markLine(n1 + ":" + n2, new double[]{n1.x, n2.x}, new double[]{n1.z, n2.z});
         } else {
             // Remove edge
             if (containsLineBetween(n1, n2)) {

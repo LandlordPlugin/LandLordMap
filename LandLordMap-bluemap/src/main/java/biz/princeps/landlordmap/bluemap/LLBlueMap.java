@@ -15,43 +15,39 @@ import java.util.logging.Level;
 
 public class LLBlueMap extends JavaPlugin {
 
-    ILandLord landLordAPI;
-    Configuration configuration;
-    BlueMapIntegration blueMapIntegration;
+    private ILandLord landLordAPI;
+    private Configuration configuration;
+    private BlueMapIntegration blueMapIntegration;
 
     @Override
     public void onEnable() {
-        logToConsole(Level.INFO, "Loading configuration...");
+        getLogger().info( "Loading configuration...");
         saveDefaultConfig();
         configuration = new Configuration(this);
 
         blueMapIntegration = new BlueMapIntegration(this);
 
-        final PluginManager pluginManager = Bukkit.getPluginManager();
-        logToConsole(Level.INFO, "Loading listeners...");
+        PluginManager pluginManager = getServer().getPluginManager();
+        getLogger().info("Loading listeners...");
         pluginManager.registerEvents(new LandlordListener(this, blueMapIntegration), this);
 
-        logToConsole(Level.INFO, "Loading commands...");
+        getLogger().info( "Loading commands...");
         PrincepsLib.getCommandManager().registerCommand(new Commands(this));
 
-        logToConsole(Level.INFO, "Loading APIs...");
+        getLogger().info( "Loading APIs...");
         landLordAPI = (ILandLord) pluginManager.getPlugin("Landlord");
 
         BlueMapAPI.onEnable(blueMapAPI -> {
-            logToConsole(Level.INFO, "BlueMap integration is initializing...");
+            getLogger().info( "BlueMap integration is initializing...");
             blueMapIntegration.hookBlueMap(blueMapAPI);
-            logToConsole(Level.INFO, "BlueMap integration has been successfully enabled/reloaded!");
+            getLogger().info( "BlueMap integration has been successfully enabled/reloaded!");
         });
     }
 
     @Override
     public void onDisable() {
         BlueMapAPI.getInstance().ifPresent(blueMapAPI -> blueMapIntegration.unhookBlueMap(blueMapAPI));
-        logToConsole(Level.INFO, "Thank you :)");
-    }
-
-    public void logToConsole(Level level, String message) {
-        Bukkit.getLogger().log(level, "[" + getName() + "] " + message);
+        getLogger().info("Thank you :)");
     }
 
     public Configuration getConfiguration() {

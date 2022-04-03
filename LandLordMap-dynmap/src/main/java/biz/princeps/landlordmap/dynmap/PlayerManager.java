@@ -36,7 +36,7 @@ public class PlayerManager {
                 pl.getLogger().warning("Could not create data.yml!");
             }
         }
-        this.data = YamlConfiguration.loadConfiguration(file);
+        data = YamlConfiguration.loadConfiguration(file);
     }
 
     /**

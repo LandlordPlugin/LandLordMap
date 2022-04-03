@@ -27,7 +27,7 @@ public class LandHelper {
 
     public LandHelper(LLDynmap p, IWorldGuardManager wg) {
         this.wg = wg;
-        this.pl = p;
+        pl = p;
     }
 
     /**
