@@ -87,14 +87,14 @@ public class IsleGenerator {
             return;
         }
 
-        this.insertLocal(ol);
-        /*lock.lock();
+//        this.insertLocal(ol);
+        lock.lock();
         try {
             pl.debug("Added " + ol + " to the queue");
             queue.add(() -> this.insertLocal(ol));
         } finally {
             lock.unlock();
-        }*/
+        }
     }
 
     /**

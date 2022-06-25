@@ -7,6 +7,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class LandlordListener implements Listener {
 
@@ -65,7 +66,12 @@ public class LandlordListener implements Listener {
     public void onManage(LandManageEvent e) {
         plugin.debug("Manage Event called for " + e.getLand());
 
-        plugin.getLandHelper().updateLand(e.getLand());
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                plugin.getLandHelper().updateLand(e.getLand());
+            }
+        }.runTaskAsynchronously(plugin);
     }
 
 }
