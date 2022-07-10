@@ -66,12 +66,18 @@ public class LandlordListener implements Listener {
     public void onManage(LandManageEvent e) {
         plugin.debug("Manage Event called for " + e.getLand());
 
-        new BukkitRunnable() {
+        BukkitRunnable runnable = new BukkitRunnable() {
             @Override
             public void run() {
                 plugin.getLandHelper().updateLand(e.getLand());
             }
-        }.runTaskAsynchronously(plugin);
+        };
+
+        if (e.isAsynchronous()) {
+            runnable.run();
+        } else {
+            runnable.runTaskAsynchronously(plugin);
+        }
     }
 
 }
