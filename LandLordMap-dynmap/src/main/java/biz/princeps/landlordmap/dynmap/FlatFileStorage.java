@@ -14,6 +14,7 @@ import org.dynmap.markers.PolyLineMarker;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
 
 public class FlatFileStorage {
 
@@ -42,7 +43,7 @@ public class FlatFileStorage {
         try {
             customConfig.load(customConfigFile);
         } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
+            pl.getLogger().log(Level.SEVERE, "coult not load config", e);
         }
 
     }
@@ -58,7 +59,7 @@ public class FlatFileStorage {
 
         for (World world : Bukkit.getWorlds()) {
             ConfigurationSection section = customConfig.getConfigurationSection(world.getName());
-            if (section == null || section.getKeys(false).size() == 0) {
+            if (section == null || section.getKeys(false).isEmpty()) {
                 continue;
             }
             IsleGenerator gen = new IsleGenerator(pl, world);

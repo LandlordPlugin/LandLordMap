@@ -24,10 +24,10 @@ public class Commands extends MainCommand {
                 Sets.newHashSet(pl.getConfig().getStringList("CommandSettings.Main.permissions")),
                 pl.getConfig().getStringList("CommandSettings.Main.aliases").toArray(new String[]{}));
         this.pl = pl;
-        this.wgm = pl.getWorldGuardHandler();
+        wgm = pl.getWorldGuardHandler();
 
-        this.addSubcommand(new Import(pl));
-        this.addSubcommand(new Color(pl));
+        addSubcommand(new Import(pl));
+        addSubcommand(new Color(pl));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Commands extends MainCommand {
         }
 
         if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("import")) {
+            if ("import".equalsIgnoreCase(args[0])) {
                 Collections.addAll(tabReturn, "all", "wg", "ll");
             }
         }

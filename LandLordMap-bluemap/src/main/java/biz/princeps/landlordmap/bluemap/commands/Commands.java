@@ -22,12 +22,12 @@ public class Commands extends MainCommand {
                 plugin.getConfig().getStringList("CommandSettings.Main.aliases").toArray(new String[]{}));
         this.plugin = plugin;
 
-        this.addSubcommand(new CommandReload(plugin));
+        addSubcommand(new CommandReload(plugin));
     }
 
     @Override
     public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
-        final List<String> completions = new ArrayList<>();
+        List<String> completions = new ArrayList<>();
 
         if (args.length == 1) {
             subCommandMap.forEach((name, subCommand) -> {

@@ -1,13 +1,10 @@
 plugins {
     id("biz.princeps.java-conventions")
-    id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 dependencies {
     implementation(project(":LandLordMap-core"))
-    compileOnly("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
-    compileOnly("biz.princeps:landlord-core:4.360")
-    compileOnly("de.eldoria:eldo-util:1.11.0-DEV")
     compileOnly("com.github.BlueMap-Minecraft:BlueMapAPI:v1.7.0")
 }
 
