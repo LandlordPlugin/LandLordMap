@@ -21,7 +21,7 @@ public class Color extends SubCommand {
                 Sets.newHashSet(pl.getConfig().getStringList("CommandSettings.color.permissions")),
                 Sets.newHashSet(pl.getConfig().getStringList("CommandSettings.color.aliases")));
         this.pl = pl;
-        this.wgm = pl.getWorldGuardHandler();
+        wgm = pl.getWorldGuardHandler();
     }
 
     @Override
@@ -35,10 +35,10 @@ public class Color extends SubCommand {
             return;
         }
 
-        long hex = 0xffffff;
+        long hex;
         try {
             hex = Long.parseLong(arguments.get(0), 16);
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             properties.sendMessage(pl.getMessage("CommandSettings.color.messages.wrongformat"));
             return;
         }

@@ -5,9 +5,6 @@ plugins {
 
 dependencies {
     implementation(project(":LandLordMap-core"))
-    compileOnly("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
-    compileOnly("biz.princeps:landlord-core:4.363")
-    compileOnly("de.eldoria:eldo-util:1.14.4")
     compileOnly("us.dynmap:dynmap-api:3.0")
     implementation("org.codemc.worldguardwrapper:worldguardwrapper:1.2.0-SNAPSHOT")
 }

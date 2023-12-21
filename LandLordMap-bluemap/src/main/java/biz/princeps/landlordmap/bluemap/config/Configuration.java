@@ -34,7 +34,7 @@ public class Configuration {
     }
 
     public void load() {
-        final FileConfiguration config = plugin.getConfig();
+        FileConfiguration config = plugin.getConfig();
 
         updateTaskFrequency = config.getLong("update-task-frequency");
         maxProcessedPerUpdate = config.getInt("max-processed-per-update");

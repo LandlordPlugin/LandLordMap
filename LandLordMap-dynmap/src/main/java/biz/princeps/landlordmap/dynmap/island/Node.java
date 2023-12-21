@@ -7,10 +7,10 @@ class Node {
     final int z;
     final boolean visited;
 
-    public Node(int x, int z) {
+    Node(int x, int z) {
         this.x = x;
         this.z = z;
-        this.visited = false;
+        visited = false;
     }
 
     public Node getLeft() {
