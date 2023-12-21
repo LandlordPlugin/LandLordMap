@@ -24,7 +24,9 @@ allprojects {
     java {
         withSourcesJar()
         withJavadocJar()
-        sourceCompatibility = JavaVersion.VERSION_1_8
+        toolchain{
+            languageVersion.set(JavaLanguageVersion.of(11))
+        }
     }
 }
 
