@@ -8,14 +8,10 @@ version = "2.3"
 
 repositories {
     mavenCentral()
-    // JitPack
-    maven { url = uri("https://jitpack.io") }
-    // Spigot
-    maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
+        maven("https://jitpack.io")
     // EldoUtilitites & Landlord
-    maven { url = uri("https://eldonexus.de/repository/maven-public/") }
-    // CodeMc-public
-    maven { url = uri("https://repo.codemc.org/repository/maven-public/") }
+    maven ("https://eldonexus.de/repository/maven-public/")
+    maven ("https://eldonexus.de/repository/maven-proxies/")
     // Dynmap
     maven { url = uri("https://repo.mikeprimm.com/") }
 }
