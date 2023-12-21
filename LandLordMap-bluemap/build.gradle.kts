@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     implementation(project(":LandLordMap-core"))
-    compileOnly("com.github.BlueMap-Minecraft:BlueMapAPI:v1.7.0")
+    compileOnly("com.github.BlueMap-Minecraft:BlueMapAPI:1.7.0")
 }
 
 description = "LandLordMap-bluemap"
