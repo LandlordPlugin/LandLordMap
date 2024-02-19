@@ -1,6 +1,7 @@
 plugins {
     id("biz.princeps.java-conventions")
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("de.chojo.publishdata") version "1.3.0"
 }
 
 dependencies {
@@ -13,12 +14,38 @@ description = "LandLordMap-dynmap"
 
 val shadebade = project.group as String + ".landlord."
 
+publishData {
+    useInternalEldoNexusRepos()
+    publishTask("shadowJar")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            publishData.configurePublication(this)
+        }
+    }
+
+    repositories {
+        maven {
+            authentication {
+                credentials(PasswordCredentials::class) {
+                    username = System.getenv("NEXUS_USERNAME")
+                    password = System.getenv("NEXUS_PASSWORD")
+                }
+            }
+            name = "Eldonexus"
+            url = uri(publishData.getRepository())
+        }
+    }
+}
+
 tasks {
     processResources {
         from(sourceSets.main.get().resources.srcDirs) {
             filesMatching("plugin.yml") {
                 expand(
-                    "version" to version
+                        "version" to version
                 )
             }
             duplicatesStrategy = DuplicatesStrategy.INCLUDE
@@ -42,4 +69,6 @@ tasks {
             events("passed", "skipped", "failed")
         }
     }
+
+
 }
