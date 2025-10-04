@@ -5,7 +5,7 @@ plugins {
 dependencies {
     api("org.spigotmc", "spigot-api", "1.16.5-R0.1-SNAPSHOT")
     api("biz.princeps", "landlord-core", "4.364")
-    api("de.eldoria", "eldo-util", "1.14.4")
+    api("de.eldoria", "eldo-util", "1.14.5")
 }
 
 description = "LandLordMap-core"
